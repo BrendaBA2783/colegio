@@ -1,6 +1,6 @@
 from datetime import datetime, date
 
-class AsistenciaFacil:
+class EasyAttendance:
     def __init__(self):
         # Simulamos estudiantes y aulas ya registrados
         self.registered_students = [

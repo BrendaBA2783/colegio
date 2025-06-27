@@ -8,6 +8,7 @@ from classroom import Classroom
 from subject import Subject
 from attendance import Attendance
 from report import Report
+from easy_attendance import EasyAttendance
 
 #Colores a usar
 #\033[96m -> Azul 
