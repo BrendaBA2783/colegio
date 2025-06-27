@@ -39,7 +39,7 @@ class Menu:
         
         except ValueError:
             print("\033[91m\nError: Debe ingresar un dato válido")
-            input("\033[93m\nPresione Enter para continuar...")
+            input("\033[93m\nPresione enter para continuar...")
             return
 
         grade_id = self.grade.generate_grade_id()
@@ -48,14 +48,14 @@ class Menu:
             grade = Grade(grade_id, grade_name, grade_students_quantity)
             if self.grade.register_grade(grade) == True:
                 print(F"El id del grado es: {grade_id}")
-                print("\nGrado registrado exitosamente!")
-                input("\nPresione enter para continuar...")
+                print("\033[92m\nGrado registrado exitosamente!")
+                input("\033[93m\nPresione enter para continuar...")
             else:
-                print("Error al registrar el grado. Intente nuevamente.")
-                input("\nPresione enter para continuar...")
+                print("\033[91m\nError al registrar el grado. Intente nuevamente.")
+                input("\033[93m\nPresione enter para continuar...")
         else:
-            print("Error: Datos del grado no válidos")
-            input("\nPresione enter para continuar...")
+            print("\033[91m\nError: Datos del grado no válidos")
+            input("\033[93m\nPresione enter para continuar...")
 
     #EMPEZAMOS A REALIZAR LOS METODOS PARA LOS ESTUDIANTES
     #Registrar estudiantes
