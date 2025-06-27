@@ -6,7 +6,6 @@ from grade import Grade
 from teacher import Teacher
 from classroom import Classroom
 from subject import Subject
-from attendance import Attendance
 from report import Report
 from easy_attendance import EasyAttendance
 
