@@ -8,6 +8,13 @@ from classroom import Classroom
 from subject import Subject
 from attendance import Attendance
 
+#Colores a usar
+#\033[96m -> Azul 
+#\033[92m -> Verde 
+#\033[93m -> Amarillo 
+#\033[91m -> Rojo
+#\033[0m -> Color original
+
 #Creamos la clase principal menu 
 class Menu: 
 
@@ -24,15 +31,16 @@ class Menu:
     #Registrar grado
     def register_grade(self):
         system("cls")
-        print("Registro de grado\n")
+        print("\033[96mREGISTRO DE GRADO\n")
 
         try:
-            grade_name = input("Ingrese el nombre del grado: ")
+            grade_name = input("\033[0mIngrese el nombre del grado: ")
             grade_students_quantity = int(input("Ingrese la cantidad de estudiantes del grado: "))
         
         except ValueError:
-            print("Error: Debe ingresar un dato válido")
-            input("\nPresione Enter para continuar...")
+            print("\033[91m\nError: Debe ingresar un dato válido")
+            input("\033[93m\nPresione enter para continuar...")
+            return
 
         grade_id = self.grade.generate_grade_id()
 
@@ -40,14 +48,14 @@ class Menu:
             grade = Grade(grade_id, grade_name, grade_students_quantity)
             if self.grade.register_grade(grade) == True:
                 print(F"El id del grado es: {grade_id}")
-                print("\nGrado registrado exitosamente!")
-                input("\nPresione enter para continuar...")
+                print("\033[92m\nGrado registrado exitosamente!")
+                input("\033[93m\nPresione enter para continuar...")
             else:
-                print("Error al registrar el grado. Intente nuevamente.")
-                input("\nPresione enter para continuar...")
+                print("\033[91m\nError al registrar el grado. Intente nuevamente.")
+                input("\033[93m\nPresione enter para continuar...")
         else:
-            print("Error: Datos del grado no válidos")
-            input("\nPresione enter para continuar...")
+            print("\033[91m\nError: Datos del grado no válidos")
+            input("\033[93m\nPresione enter para continuar...")
 
     #EMPEZAMOS A REALIZAR LOS METODOS PARA LOS ESTUDIANTES
     #Registrar estudiantes
@@ -425,7 +433,7 @@ class Menu:
     def show_main_menu(self):
         while True:
             system("cls")
-            print("=================================")
+            print("\033[0m=================================")
             print("           Colegio BSJ           ")
             print("=================================\n")
             print("Menú principal: \n")
