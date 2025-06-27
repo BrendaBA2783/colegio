@@ -729,7 +729,7 @@ class Menu:
                         attendance_option = int(input("Ingrese el código de la opción deseada: "))
 
                         if attendance_option == 1:
-                            self.register_attendance()
+                            self.asistencia.register_attendance()
 
                         elif attendance_option == 2:
                             self.modify_attendance()

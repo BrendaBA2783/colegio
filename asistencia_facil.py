@@ -28,14 +28,18 @@ class AsistenciaFacil:
             return
         students = []
         grades = set()
+        not_found = []
         for i in range(n):
             name = input(f"Nombre del estudiante #{i+1}: ")
             student = self.find_student(name)
             if not student:
-                print(f"El estudiante '{name}' no ha sido registrado.")
-                return
-            students.append(student)
-            grades.add(student['grade'])
+                not_found.append(name)
+            else:
+                students.append(student)
+                grades.add(student['grade'])
+        if not_found:
+            print(f"No se encontraron los siguientes estudiantes: {', '.join(not_found)}")
+            return
         if len(grades) > 1:
             print("Todos los estudiantes deben ser del mismo grado.")
             return
