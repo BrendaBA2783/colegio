@@ -6,7 +6,7 @@ from grade import Grade
 from teacher import Teacher
 from classroom import Classroom
 from subject import Subject
-from attendance import Attendance
+from asistencia_facil import AsistenciaFacil
 
 #Colores a usar
 #\033[96m -> Azul 
@@ -25,7 +25,8 @@ class Menu:
         self.teacher = Teacher()
         self.classroom = Classroom()
         self.subject = Subject()
-        self.attendance = Attendance()
+        # Usamos la nueva clase de asistencia fácil
+        self.asistencia = AsistenciaFacil()
 
     #EMPEZAMOS A REALIZAR LOS METODOS PARA LOS GRADOS
     #Registrar grado
@@ -346,53 +347,32 @@ class Menu:
 
     # Métodos para registrar, modificar, habilitar, deshabilitar, listar y visualizar asistencias
     def register_attendance(self):
-        from attendance import Attendance
-        from datetime import datetime
-        system("cls")
-        print("Registro de asistencia\n")
-        try:
-            fecha_str = input("Ingrese la fecha de la asistencia (YYYY-MM-DD, dejar vacío para hoy): ")
-            if fecha_str:
-                attendance_date = datetime.strptime(fecha_str, "%Y-%m-%d").date()
-            else:
-                attendance_date = None
-        except ValueError:
-            print("Error: Fecha inválida")
-            input("Presione Enter para continuar...")
-            return
-        classroom = input("Ingrese el aula de clase: ")
-        teacher = input("Ingrese el nombre del docente encargado: ")
-        subject = input("Ingrese la materia que imparte: ")
-        students = []
-        try:
-            cantidad = int(input("¿Cuántos estudiantes desea registrar en esta asistencia?: "))
-        except ValueError:
-            print("Error: Debe ingresar un número válido")
-            input("Presione Enter para continuar...")
-            return
-        for i in range(cantidad):
-            nombre = input(f"Nombre del estudiante {i+1}: ")
-            presente = input(f"¿Asistió? (s/n): ").strip().lower() == 's'
-            excused = False
-            justification = ''
-            if not presente:
-                excused = input("¿Tiene excusa? (s/n): ").strip().lower() == 's'
-                if excused:
-                    justification = input("Justificación de la inasistencia: ")
-            students.append({'student': nombre, 'present': presente, 'excused': excused, 'justification': justification})
-        attendance_id = self.attendance.generate_attendance_id()
-        if self.attendance.validate_attendance_data(attendance_id, attendance_date, classroom, students, teacher, subject):
-            attendance = Attendance(attendance_id, attendance_date, classroom, students, teacher, subject)
-            if self.attendance.register_attendance(attendance):
-                print(f"Asistencia registrada con ID: {attendance_id}")
-                print("\nAsistencia registrada exitosamente!")
-                input("Presione Enter para continuar...")
-            else:
-                print("Error al registrar la asistencia. Intente nuevamente.")
-                input("Presione Enter para continuar...")
+        # Usamos el método de la nueva clase
+        self.asistencia.registrar_asistencia()
+        input("Presione Enter para continuar...")
+
+    def list_attendances(self):
+        print("Listar asistencias por:")
+        print("1. Fecha")
+        print("2. Aula")
+        print("3. Grado")
+        print("4. Estudiante")
+        opcion = input("Elija una opción: ")
+        if opcion == '1':
+            valor = input("Ingrese la fecha (YYYY-MM-DD): ")
+            self.asistencia.listar_asistencias('fecha', valor)
+        elif opcion == '2':
+            valor = input("Ingrese el número de aula: ")
+            self.asistencia.listar_asistencias('aula', valor)
+        elif opcion == '3':
+            valor = input("Ingrese el grado: ")
+            self.asistencia.listar_asistencias('grado', valor)
+        elif opcion == '4':
+            valor = input("Ingrese el nombre del estudiante: ")
+            self.asistencia.listar_asistencias('estudiante', valor)
         else:
-            print("Error: Datos de la asistencia no válidos")
-            input("Presione Enter para continuar...")
+            print("Opción no válida.")
+        input("Presione Enter para continuar...")
 
     def modify_attendance(self):
         system("cls")
@@ -410,12 +390,6 @@ class Menu:
         system("cls")
         print("Deshabilitar asistencia\n")
         print("Funcionalidad no implementada aún.")
-        input("Presione Enter para continuar...")
-
-    def list_attendances(self):
-        system("cls")
-        print("Lista de asistencias\n")
-        self.attendance.list_attendances()
         input("Presione Enter para continuar...")
 
     def view_attendance(self):
