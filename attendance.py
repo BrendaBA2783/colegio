@@ -141,3 +141,56 @@ class Attendance:
     # Procedimiento vacío para ser llamado desde el menú principal
     def attendance_procedure(self):
         pass
+
+    def get_total_students(self):
+        # Retorna el total de estudiantes únicos registrados en asistencias
+        students = set()
+        for attendance in self.__attendances:
+            for s in attendance.students:
+                students.add(s['student'])
+        return len(students)
+
+    def get_students_by_grade(self):
+        # Retorna un diccionario con la cantidad de estudiantes por grado
+        grades = {}
+        for attendance in self.__attendances:
+            for s in attendance.students:
+                grade = s.get('grade', 'Sin grado')
+                grades[grade] = grades.get(grade, 0) + 1
+        return grades
+
+    def get_attendance_by_date(self):
+        # Retorna un diccionario con la cantidad de asistencias por fecha
+        dates = {}
+        for attendance in self.__attendances:
+            date = str(attendance.attendance_date)
+            count = sum(1 for s in attendance.students if s['present'])
+            dates[date] = dates.get(date, 0) + count
+        return dates
+
+    def get_absence_by_date(self):
+        # Retorna un diccionario con la cantidad de inasistencias por fecha
+        dates = {}
+        for attendance in self.__attendances:
+            date = str(attendance.attendance_date)
+            count = sum(1 for s in attendance.students if not s['present'])
+            dates[date] = dates.get(date, 0) + count
+        return dates
+
+    def get_unjustified_absence_by_date(self):
+        # Retorna un diccionario con la cantidad de inasistencias injustificadas por fecha
+        dates = {}
+        for attendance in self.__attendances:
+            date = str(attendance.attendance_date)
+            count = sum(1 for s in attendance.students if not s['present'] and not s['excused'])
+            dates[date] = dates.get(date, 0) + count
+        return dates
+
+    def get_justified_absence_by_date(self):
+        # Retorna un diccionario con la cantidad de inasistencias justificadas por fecha
+        dates = {}
+        for attendance in self.__attendances:
+            date = str(attendance.attendance_date)
+            count = sum(1 for s in attendance.students if not s['present'] and s['excused'])
+            dates[date] = dates.get(date, 0) + count
+        return dates

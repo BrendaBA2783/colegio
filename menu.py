@@ -1,12 +1,13 @@
 #Espacio para realizar la importacion de las librerias o archivos (clases) necesari@s
 from os import system
-
+from datetime import datetime
 from student import Student
 from grade import Grade
 from teacher import Teacher
 from classroom import Classroom
 from subject import Subject
 from attendance import Attendance
+from report import Report
 
 #Colores a usar
 #\033[96m -> Azul 
@@ -429,6 +430,79 @@ class Menu:
             return
         self.attendance.view_attendance(attendance_id)
         input("Presione Enter para continuar...")
+
+    #report methods
+    def report_student_count(self):
+        system("cls")
+        print("Reporte de cantidad de estudiantes\n")
+        total = self.attendance.get_total_students()
+        print(f"Total de estudiantes registrados: {total}")
+        input("Presione Enter para continuar...")
+
+    def report_students_by_grade(self):
+        system("cls")
+        print("Reporte de cantidad de estudiantes por grado\n")
+        data = self.attendance.get_students_by_grade()
+        for grade, count in data.items():
+            print(f"Grado {grade}: {count} estudiantes")
+        input("Presione Enter para continuar...")
+
+    def report_attendance_by_date(self):
+        system("cls")
+        print("Reporte de estudiantes con asistencia por fecha\n")
+        data = self.attendance.get_attendance_by_date()
+        for date, count in data.items():
+            print(f"Fecha {date}: {count} asistencias")
+        input("Presione Enter para continuar...")
+
+    def report_absence_by_date(self):
+        system("cls")
+        print("Reporte de estudiantes con inasistencia por fecha\n")
+        data = self.attendance.get_absence_by_date()
+        for date, count in data.items():
+            print(f"Fecha {date}: {count} inasistencias")
+        input("Presione Enter para continuar...")
+
+    def report_unjustified_absence_by_date(self):
+        system("cls")
+        print("Reporte de inasistencias injustificadas por fecha\n")
+        data = self.attendance.get_unjustified_absence_by_date()
+        for date, count in data.items():
+            print(f"Fecha {date}: {count} inasistencias injustificadas")
+        input("Presione Enter para continuar...")
+
+    def report_justified_absence_by_date(self):
+        system("cls")
+        print("Reporte de inasistencias justificadas por fecha\n")
+        data = self.attendance.get_justified_absence_by_date()
+        for date, count in data.items():
+            print(f"Fecha {date}: {count} inasistencias justificadas")
+        input("Presione Enter para continuar...")
+
+    def report_option(self):
+        report = f"Total Students: {self.report_student_count}\n"
+        report += "Students by Grade:\n"
+        for grade, count in self.report_students_by_grade.items():
+            report += f"  Grade {grade}: {count}\n"
+        report += "Attendance by Date:\n"
+        for date, count in self.report_attendance_by_date.items():
+            report += f"  {date}: {count}\n"
+        report += "Absence by Date:\n"
+        for date, count in self.report_absence_by_date.items():
+            report += f"  {date}: {count}\n"
+        report += "Unjustified Absence by Date:\n"
+        for date, count in self.report_unjustified_absence_by_date.items():
+            report += f"  {date}: {count}\n"
+        report += "Justified Absence by Date:\n"
+        for date, count in self.report_justified_absence_by_date.items():
+            report += f"  {date}: {count}\n"
+            report = Report(report_student_count=self.attendance.get_total_students(),
+                            report_students_by_grade=self.attendance.get_students_by_grade(),
+                            report_attendance_by_date=self.attendance.get_attendance_by_date(),
+                            report_absence_by_date=self.attendance.get_absence_by_date(),
+                            report_unjustified_absence_by_date=self.attendance.get_unjustified_absence_by_date(),
+                            report_justified_absence_by_date=self.attendance.get_justified_absence_by_date())
+        return report
 
     def show_main_menu(self):
         while True:
