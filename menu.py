@@ -8,6 +8,13 @@ from classroom import Classroom
 from subject import Subject
 from attendance import Attendance
 
+#Colores a usar
+#\033[96m -> Azul 
+#\033[92m -> Verde 
+#\033[93m -> Amarillo 
+#\033[91m -> Rojo
+#\033[0m -> Color original
+
 #Creamos la clase principal menu 
 class Menu: 
 
@@ -24,15 +31,16 @@ class Menu:
     #Registrar grado
     def register_grade(self):
         system("cls")
-        print("Registro de grado\n")
+        print("\033[96mREGISTRO DE GRADO\n")
 
         try:
-            grade_name = input("Ingrese el nombre del grado: ")
+            grade_name = input("\033[0mIngrese el nombre del grado: ")
             grade_students_quantity = int(input("Ingrese la cantidad de estudiantes del grado: "))
         
         except ValueError:
-            print("Error: Debe ingresar un dato válido")
-            input("\nPresione Enter para continuar...")
+            print("\033[91m\nError: Debe ingresar un dato válido")
+            input("\033[93m\nPresione Enter para continuar...")
+            return
 
         grade_id = self.grade.generate_grade_id()
 
@@ -425,7 +433,7 @@ class Menu:
     def show_main_menu(self):
         while True:
             system("cls")
-            print("=================================")
+            print("\033[0m=================================")
             print("           Colegio BSJ           ")
             print("=================================\n")
             print("Menú principal: \n")
