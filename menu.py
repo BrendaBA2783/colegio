@@ -46,7 +46,7 @@ class Menu:
 
         if self.grade.validate_grade_data(grade_id, grade_name, grade_students_quantity):
             grade = Grade(grade_id, grade_name, grade_students_quantity)
-            if self.grade.register_grade(grade) == True:
+            if self.grade.register_grade(grade, grade_id) == True:
                 print(F"El id del grado es: {grade_id}")
                 print("\033[92m\nGrado registrado exitosamente!")
                 input("\033[93m\nPresione enter para continuar...")
@@ -56,6 +56,66 @@ class Menu:
         else:
             print("\033[91m\nError: Datos del grado no válidos")
             input("\033[93m\nPresione enter para continuar...")
+
+    #MModificar grado
+    def modify_grade(self):
+        system("cls")
+        print("\033[96mMODIFICAR GRADO\n")
+        
+        grade_id = int(input("\033[0mIngrese el ID del grado a modificar: "))
+
+        if self.grade.modify_grade(grade_id) == True:
+            print("\033[92m\nGrado modificado exitosamente!")
+            input("\033[93m\nPresione enter para continuar...")
+        else:
+            print("\033[91m\nError al modificar el grado. Intente nuevamente.")
+            input("\033[93m\nPresione enter para continuar...")
+
+    #Listar grados
+    def list_grades(self):
+        system("cls")
+        print("\033[96mLISTA DE GRADOS\n")
+        self.grade.list_grades()
+        input("\033[93m\nPresione enter para continuar...")
+
+    #Habilitar grado
+    def enable_grade(self):
+        system("cls")
+        print("\033[96mHABILITAR GRADO\n")
+        try:
+            grade_id = int(input("\033[0mIngrese el ID del grado a habilitar: "))
+        except ValueError:
+            print("\033[91m\nError: Debe ingresar un número válido")
+            input("\033[93m\nPresione Enter para continuar...")
+            return
+        self.grade.enable_grade(grade_id)
+        input("\033[93m\nPresione Enter para continuar...")
+
+    #Deshabilitar grado
+    def disable_grade(self):
+        system("cls")
+        print("\033[96mDESHABILITAR GRADO\n")
+        try:
+            grade_id = int(input("\033[0mIngrese el ID del grado a deshabilitar: "))
+        except ValueError:
+            print("\033[91m\nError: Debe ingresar un número válido")
+            input("\033[93m\nPresione Enter para continuar...")
+            return
+        self.grade.disable_grade(grade_id)
+        input("\033[93m\nPresione Enter para continuar...")
+
+    #Visualizar grado
+    def view_grade(self):
+        system("cls")
+        print("\033[96mVISUALIZAR GRADO\n")
+        try:
+            grade_id = int(input("\033[0mIngrese el ID del grado a visualizar: "))
+        except ValueError:
+            print("\033[91m\nError: Debe ingresar un número válido")
+            input("\033[93m\nPresione Enter para continuar...")
+            return
+        self.grade.view_grade(grade_id)
+        input("\033[93m\nPresione Enter para continuar...")
 
     #EMPEZAMOS A REALIZAR LOS METODOS PARA LOS ESTUDIANTES
     #Registrar estudiantes
